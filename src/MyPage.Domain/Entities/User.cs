@@ -1,36 +1,29 @@
-﻿using MyPage.Domain.Consts.cs;
-using MyPage.Domain.Exceptions;
-using MyPage.Domain.ValueObjects;
+﻿using MyPage.Domain.Exceptions;
 using Microsoft.AspNetCore.Identity;
 
 namespace MyPage.Domain.Entities;
-public class User : IdentityUser<long> {
+public class User {
+    public int Id { get; set; }
 
-    private Name _name;
-    private Surname _surname;
-    private Role _role;
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 
-    private readonly List<Post> _posts = new();
+    public string Email { get; set; }   
+    public string Password { get; set; }
 
-    internal User(Id id, Name name, Surname surname, Role role) {
-        _name = name;
-        _surname = surname;
-        _role = role;
-    }
+    public readonly List<Post> Posts = new();
 
     public void AddPost(Post post) {
-        _posts.Add(post);
-//        AddEvent(new PackingItemAdded(this, item));
+        Posts.Add(post);
     }
 
     public void RemovePost(int id) {
         var post = GetItem(id);
-        _posts.Remove(post);
-//        AddEvent(new PackingItemRemoved(this, item));
+        Posts.Remove(post);
     }
 
     private Post GetItem(int id) {
-        var post = _posts.FirstOrDefault(p => p.Id == id);
+        var post = Posts.FirstOrDefault(p => p.Id == id);
 
         if (post is null) {
             throw new PostNotFoundExeption(id);

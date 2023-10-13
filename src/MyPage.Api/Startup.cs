@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace MyPage.Api {
     public class Startup {

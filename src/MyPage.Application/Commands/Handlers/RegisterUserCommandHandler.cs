@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyPage.Domain.ValueObjects {
-    internal class Email {
+namespace MyPage.Application.Commands.Handlers {
+    internal class RegisterUserCommandHandler {
     }
 }
