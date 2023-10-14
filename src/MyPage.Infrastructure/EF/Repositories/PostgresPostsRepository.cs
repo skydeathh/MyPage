@@ -4,7 +4,7 @@ using MyPage.Domain.Repositories;
 using MyPage.Infrastructure.EF.Contexts;
 
 namespace MyPage.Infrastructure.EF.Repositories;
-internal sealed class PostgresPostRepository : IMyPageRepository<Post> {
+internal sealed class PostgresPostRepository : IPostRepository {
     private readonly DbSet<Post> _posts;
     private readonly ApplicationDbContext _context;
 

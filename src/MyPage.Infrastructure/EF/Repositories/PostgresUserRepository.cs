@@ -5,7 +5,7 @@ using MyPage.Infrastructure.EF.Contexts;
 
 namespace MyPage.Infrastructure.EF.Repositories;
 
-internal sealed class PostgresUserRepository : IMyPageRepository<User> {
+internal sealed class PostgresUserRepository : IUserRepository {
     private readonly DbSet<User> _users;
     private readonly ApplicationDbContext _context;
 
@@ -24,8 +24,11 @@ internal sealed class PostgresUserRepository : IMyPageRepository<User> {
         await _context.SaveChangesAsync();
     }
 
-    public Task<User> GetAsync(long id) =>
-        _users.SingleOrDefaultAsync(p => p.Id == id);
+    public Task<User> GetAsync(long id) 
+        => _users.SingleOrDefaultAsync(p => p.Id == id);
+
+    public Task<User> GetUserByEmail(string email)
+        => _users.SingleOrDefaultAsync(p => p.Email == email);
 
     public async Task UpdateAsync(User entity) {
         _users.Update(entity);

@@ -1,8 +1,11 @@
 ﻿using MyPage.Domain.Exceptions;
-using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyPage.Domain.Entities;
 public class User {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     public string FirstName { get; set; }
@@ -12,6 +15,13 @@ public class User {
     public string Password { get; set; }
 
     public readonly List<Post> Posts = new();
+
+    public User(string firstName, string lastName, string email, string password) {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Password = password;
+    }
 
     public void AddPost(Post post) {
         Posts.Add(post);

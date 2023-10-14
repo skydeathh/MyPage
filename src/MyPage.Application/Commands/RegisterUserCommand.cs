@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyPage.Shared.Abstractions.Commands;
 
-namespace MyPage.Application.Commands {
-    internal class RegisterUserCommand {
-    }
-}
+namespace MyPage.Application.Commands;
+
+public record RegisterUserCommand(string FirstName, string LastName, string Email, string Password) : ICommand;
