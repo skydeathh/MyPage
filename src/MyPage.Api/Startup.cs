@@ -1,5 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore.Design;
+using MyPage.Infrastructure.EF;
+using MyPage.Shared;
 
 namespace MyPage.Api {
     public class Startup {
@@ -10,6 +12,9 @@ namespace MyPage.Api {
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
+            services.AddShared();
+            services.AddEF(Configuration);
+
             services.AddControllers();
 
             services.AddSwaggerGen(c => {
@@ -21,7 +26,7 @@ namespace MyPage.Api {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddDeleteUsersApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyPage v1"));
             }
 
             app.UseHttpsRedirection();
