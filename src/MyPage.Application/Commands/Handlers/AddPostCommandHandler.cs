@@ -12,16 +12,10 @@ internal sealed class AddPostCommandHandler : ICommandHandler<AddPostCommand> {
         _repository = repository;
     }
 
-    public async Task HandleAsync(DeletePostCommand command) {
-        var post = await _repository.GetAsync(command.Id);
+    public async Task HandleAsync(AddPostCommand command) {
+        var date = DateTime.Now;
 
-        if (post is null) {
-            throw new PostNotFoundException(command.Id);
-        }
-
-        if (post.UserId != command.UserId) {
-            throw new NotUsersPostException(command.UserId, command.Id);
-        }
+        var post = new Post(command.Title, command.Content, date, date, command.UserId);
 
         await _repository.DeleteAsync(post);
     }

@@ -11,7 +11,14 @@ public class Post {
     public string Content { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
-
-    public User User { get; set; }
     public int UserId { get; set; }
+    public User User { get; set; }
+
+    public Post(string title, string content, DateTime createdDate, DateTime updatedDate, int userId) {
+        Title = title;
+        Content = content;
+        CreatedDate = createdDate;
+        UpdatedDate = updatedDate;
+        UserId = userId;
+    }
 }

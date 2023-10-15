@@ -18,7 +18,7 @@ internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserC
         if (user is not null) {
             throw new UserAlreadyExistsException(command.Email);
         }
-                                               
+        // TODO PUT HASH IN REPOSITORY INSTEAD OF USER'S PASSWORD                                    
         user = new User(command.FirstName, command.LastName, command.Email, command.Password);
 
         await _repository.AddAsync(user);

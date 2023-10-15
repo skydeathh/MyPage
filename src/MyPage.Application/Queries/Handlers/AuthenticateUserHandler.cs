@@ -1,20 +1,31 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.EntityFrameworkCore;
 using MyPage.Application.DTO;
+using MyPage.Application.Exceptions;
 using MyPage.Domain.Entities;
+using MyPage.Infrastructure.EF.Contexts;
 using MyPage.Shared.Abstractions.Queries;
 
 namespace MyPage.Application.Queries.Handlers;
 
 internal class AuthenticateUserHandler : IQueryHandler<AuthentificateUser, AuthentificationResponse> {
-    private readonly UserManager<User> _userManager;
+    private readonly DbSet<User> _users;
 
-    public AuthenticateUserHandler(UserManager<User> userManager) {
-        _userManager = userManager;
+    public AuthenticateUserHandler(ApplicationDbContext context) {
+        _users = context.Users;
     }
 
-    public Task<AuthentificationResponse> HandleAsync(AuthentificateUser command) {
+    public async Task<AuthentificationResponse> HandleAsync(AuthentificateUser command) {
+        var user = await _users.SingleOrDefaultAsync(u => u.Email == command.Email);
 
-     //   _userManager.
-        throw new NotImplementedException();
+        if (user == null) {
+            throw new UserNotFoudException(command.Email);
+        }
+        
+        // TODO USE HASH COMPARE INSTEAD OF
+        if (user.Password != command.Password) {
+            throw new WrongPasswordException();
+        }
+
+        return user.AsAuthentificationResponse();
     }
 }
