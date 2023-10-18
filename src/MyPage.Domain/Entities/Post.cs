@@ -20,5 +20,11 @@ public class Post {
         CreatedDate = createdDate;
         UpdatedDate = updatedDate;
         UserId = userId;
+
+    }
+
+    public Post(string title, string content, DateTime createdDate, DateTime updatedDate, int userId, User user)
+        : this(title, content, createdDate, updatedDate, userId) {
+        User = user;
     }
 }
