@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using MyPage.Infrastructure.EF;
 using MyPage.Shared;
+using MyPage.Application;
 
 namespace MyPage.Api {
     public class Startup {
@@ -14,6 +15,7 @@ namespace MyPage.Api {
         public void ConfigureServices(IServiceCollection services) {
             services.AddShared();
             services.AddEF(Configuration);
+            services.AddApplication();
 
             services.AddControllers();
 

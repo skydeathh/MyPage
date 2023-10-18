@@ -7,22 +7,22 @@ using MyPage.Shared.Abstractions.Queries;
 
 namespace MyPage.Application.Queries.Handlers;
 
-internal class AuthenticateUserHandler : IQueryHandler<AuthentificateUser, AuthentificationResponse> {
+internal sealed class AuthenticateUserQueryHandler : IQueryHandler<AuthentificateUser, AuthentificationResponse> {
     private readonly DbSet<User> _users;
 
-    public AuthenticateUserHandler(ApplicationDbContext context) {
+    public AuthenticateUserQueryHandler(ApplicationDbContext context) {
         _users = context.Users;
     }
 
-    public async Task<AuthentificationResponse> HandleAsync(AuthentificateUser command) {
-        var user = await _users.SingleOrDefaultAsync(u => u.Email == command.Email);
+    public async Task<AuthentificationResponse> HandleAsync(AuthentificateUser query) {
+        var user = await _users.SingleOrDefaultAsync(u => u.Email == query.Email);
 
         if (user == null) {
-            throw new UserNotFoudException(command.Email);
+            throw new UserNotFoudException(query.Email);
         }
         
         // TODO USE HASH COMPARE INSTEAD OF
-        if (user.Password != command.Password) {
+        if (user.Password != query.Password) {
             throw new WrongPasswordException();
         }
 
